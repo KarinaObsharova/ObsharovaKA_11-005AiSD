@@ -26,12 +26,15 @@ struct linkedList {
 
     int get(int id) {
         int count = 0;
+        int value;
         Node *temp = pHead;
         while (count != id) {
             count++;
             temp = temp->next;
+            value = temp->value;
         }
-        return temp->value;
+
+        return value;
     }
 
     int size() {
@@ -41,6 +44,7 @@ struct linkedList {
             temp = temp->next;
             count++;
         }
+        delete temp;
         return count;
     }
 

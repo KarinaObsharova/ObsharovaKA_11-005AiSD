@@ -17,9 +17,11 @@ struct Stack {
     }
 
     int Pop() {
-        int temp = pHead->value;
-        pHead = pHead->next;
-        return temp;
+        Node * temp = pHead;
+        int value = temp->value;
+        pHead = temp->next;
+        delete temp;
+        return value;
     }
 
     int Peek() {
