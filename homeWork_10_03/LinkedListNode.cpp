@@ -70,8 +70,7 @@ struct LinkedListNode {
             newHead->next = pHead;
             pHead = newHead;
         } else if (id == size()) {
-            newHead->previous = tempHead;
-            tempHead->next = newHead;
+          add(item);
         } else {
             tempHead->previous->next = newHead;
             newHead->previous = tempHead->previous;
@@ -91,10 +90,9 @@ struct LinkedListNode {
             tempHead = tempHead->next;
         }
         if(id == 0){
+            pHead->next->previous = nullptr;
             pHead = pHead->next;
-            pHead->previous = nullptr;
-        }
-        if(id == size() - 1){
+        } else if(id == size() -1){
             tempHead->previous->next = nullptr;
             tempHead = tempHead->previous;
 
@@ -103,8 +101,6 @@ struct LinkedListNode {
             tempHead->next->previous = tempHead->previous;
         }
     }
-
-
 
 };
 
@@ -117,11 +113,11 @@ int main() {
     plist->printAll();
     cout << " " << endl;
     cout << "Add elements: " << endl;
-    plist->insertAt(100, 3);
+    plist->insertAt(100, 4);
     plist->printAll();
     cout << " " << endl;
     cout << "Remove elements: " << endl;
-    plist->removeAt( 2);
+    plist->removeAt( 4);
     plist->printAll();
     cout << " " << endl;
     cout << "Cheek method get(1): " << plist->get(1) << endl;
