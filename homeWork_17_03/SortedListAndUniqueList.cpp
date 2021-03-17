@@ -86,13 +86,8 @@ struct SortedList {
         }
     }
 
-};
 
-struct UniqueList {
-    Node *pHead = nullptr;
-
-
-    void add(int item) {
+    void UniqueAdd(int item) {
         int count = 0;
         Node *node2 = new Node;
         node2->value = item;
@@ -125,49 +120,6 @@ struct UniqueList {
         }
 
     }
-
-    int get(int id) {
-        int count = 0;
-        int value;
-        Node *tempHead = pHead;
-        while (count != id) {
-            count++;
-            tempHead = tempHead->next;
-            value = tempHead->value;
-        }
-        return value;
-    }
-
-    int size() {
-        Node *tempHead = pHead;
-        int count = 1;
-        while (tempHead->next != nullptr) {
-            tempHead = tempHead->next;
-            count++;
-        }
-        return count;
-    }
-
-    void remove(int id) {
-        Node *tempHead = pHead;
-        int count = 0;
-        while (tempHead != nullptr && id != count) {
-            count++;
-            tempHead = tempHead->next;
-        }
-        if (id == 0) {
-            pHead->next->previous = nullptr;
-            pHead = pHead->next;
-        } else if (id == size() - 1) {
-            tempHead->previous->next = nullptr;
-            tempHead = tempHead->previous;
-
-        } else {
-            tempHead->previous->next = tempHead->next;
-            tempHead->next->previous = tempHead->previous;
-        }
-    }
-
 };
 
 SortedList *Union(SortedList *a, SortedList *b) {
@@ -175,31 +127,32 @@ SortedList *Union(SortedList *a, SortedList *b) {
     Node *temp = a->pHead;
     Node *temp2 = b->pHead;
     while (temp != nullptr && temp2 != nullptr) {
-        if (temp->value < temp2->value ) {
+        if (temp->value < temp2->value) {
             unionList->add(temp->value);
             temp = temp->next;
-        } else if (temp->value == temp2->value){
+        } else if (temp->value == temp2->value) {
             unionList->add(temp2->value);
             temp2 = temp2->next;
             temp = temp->next;
-            } else{
-                unionList->add(temp2->value);
-                temp2 = temp2->next;
-            }
-
+        } else {
+            unionList->add(temp2->value);
+            temp2 = temp2->next;
         }
+
+    }
     return unionList;
 }
-SortedList * Intersect(SortedList * a, SortedList * b) {
+
+SortedList *Intersect(SortedList *a, SortedList *b) {
     SortedList *intersectList = new SortedList;
     Node *temp = a->pHead;
     Node *temp2 = b->pHead;
     while (temp != nullptr && temp2 != nullptr) {
-        if (temp->value == temp2->value ) {
+        if (temp->value == temp2->value) {
             intersectList->add(temp->value);
             temp2 = temp2->next;
 
-        } else if(temp->value < temp2->value)
+        } else if (temp->value < temp2->value)
             temp = temp->next;
         else temp2 = temp2->next;
 
@@ -207,17 +160,18 @@ SortedList * Intersect(SortedList * a, SortedList * b) {
     return intersectList;
 
 }
-SortedList *Difference(SortedList * a, SortedList * b) {
+
+SortedList *Difference(SortedList *a, SortedList *b) {
     SortedList *differenceList = new SortedList;
     Node *temp = a->pHead;
     Node *temp2 = b->pHead;
-    while (temp != nullptr && temp2 != nullptr){
-        if (temp->value == temp2->value ) {
+    while (temp != nullptr && temp2 != nullptr) {
+        if (temp->value == temp2->value) {
             temp = temp->next;
 
-        } else if(temp->value > temp2->value)
+        } else if (temp->value > temp2->value)
             temp2 = temp2->next;
-        else{
+        else {
             differenceList->add(temp->value);
             temp = temp->next;
         }
@@ -226,13 +180,6 @@ SortedList *Difference(SortedList * a, SortedList * b) {
 }
 
 void printAll(SortedList *a) {
-    Node *tempHead = a->pHead;
-    while (tempHead != nullptr) {
-        cout << tempHead->value << " ";
-        tempHead = tempHead->next;
-    }
-}
-void printAll(UniqueList *a) {
     Node *tempHead = a->pHead;
     while (tempHead != nullptr) {
         cout << tempHead->value << " ";
@@ -256,51 +203,56 @@ int main() {
     cout << " " << endl;
     cout << " " << endl;
 
-    SortedList *plist2 = new SortedList;
-    cout << "Add elements in Sortedlist2:  5, 30, 21, 38, 100 " << endl;
-    cout << "Sortedlist2: ";
 
-    plist2->add(5);
-    plist2->add(30);
-    plist2->add(21);
-    plist2->add(38);
-    plist2->add(100);
-    printAll(plist2);
-    cout << " " << endl;
-    cout << " " << endl;
-
-    UniqueList *pUniqueList  = new UniqueList;
+    SortedList *pUniqueList = new SortedList;
     cout << "Add elements in UniqueList:  10, 65, 20, 20, 65, 16 " << endl;
     cout << "UniqueList: ";
 
-    pUniqueList->add(10);
-    pUniqueList->add(65);
-    pUniqueList->add(20);
-    pUniqueList->add(20);
-    pUniqueList->add(65);
-    pUniqueList->add(16);
+    pUniqueList->UniqueAdd(10);
+    pUniqueList->UniqueAdd(65);
+    pUniqueList->UniqueAdd(20);
+    pUniqueList->UniqueAdd(20);
+    pUniqueList->UniqueAdd(65);
+    pUniqueList->UniqueAdd(16);
+    pUniqueList->UniqueAdd(15);
     printAll(pUniqueList);
     cout << " " << endl;
     cout << " " << endl;
 
+    SortedList *pUniqueList2 = new SortedList;
+    cout << "Add elements in UniqueList:  20, 26, 65, 20, 45, 30, 16 " << endl;
+    cout << "UniqueList: ";
+
+    pUniqueList2->UniqueAdd(20);
+    pUniqueList2->UniqueAdd(26);
+    pUniqueList2->UniqueAdd(65);
+    pUniqueList2->UniqueAdd(20);
+    pUniqueList2->UniqueAdd(45);
+    pUniqueList2->UniqueAdd(30);
+    pUniqueList2->UniqueAdd(16);
+    printAll(pUniqueList2);
+
+    cout << " " << endl;
+    cout << " " << endl;
+
     cout << "list1: ";
-    printAll(plist);
+    printAll(pUniqueList);
     cout << " " << endl;
 
     cout << "list2: ";
-    printAll(plist2);
+    printAll(pUniqueList2);
     cout << " " << endl;
 
     cout << "Union: " << endl;
-    printAll(Union(plist, plist2));
+    printAll(Union(pUniqueList, pUniqueList2));
     cout << " " << endl;
 
     cout << "Intersect: " << endl;
-    printAll(Intersect(plist, plist2));
+    printAll(Intersect(pUniqueList, pUniqueList2));
     cout << " " << endl;
 
     cout << "Difference: " << endl;
-    printAll(Difference(plist, plist2));
+    printAll(Difference(pUniqueList, pUniqueList2));
 
     return 0;
 }
